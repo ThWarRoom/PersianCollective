@@ -18,7 +18,7 @@ const RANKS = [
 
 const SETTINGS = {
   siteName: "Persian Collective",
-  season: "فصل ۳",
+  season: "فصل 2",
   foundedDate: "۱۴۰۲/۰۲/۱۵",
   version: "نسخه ۲.۴.۰",
   supportId: "@PersianSupport",
@@ -27,14 +27,14 @@ const SETTINGS = {
 };
 
 const CHANNELS = [
-  { id: 1, name: "@ArmaxWorld", xp: 18450, quality: 96, rank: "Legend", members: "۴۲ هزار" },
-  { id: 2, name: "@NightForgeTV", xp: 16200, quality: 94, rank: "Prestige V", members: "۳۸ هزار" },
-  { id: 3, name: "@ShadowRealmGG", xp: 15100, quality: 91, rank: "Prestige IV", members: "۳۵ هزار" },
-  { id: 4, name: "@PixelKhorasan", xp: 13980, quality: 89, rank: "Prestige II", members: "۲۹ هزار" },
-  { id: 5, name: "@ReyhanGaming", xp: 12750, quality: 93, rank: "Prestige I", members: "۲۶ هزار" },
-  { id: 6, name: "@KavehStream", xp: 11400, quality: 88, rank: "Dominion V", members: "۲۲ هزار" },
-  { id: 7, name: "@DariushPlays", xp: 10650, quality: 85, rank: "Dominion IV", members: "۲۰ هزار" },
-  { id: 8, name: "@SetarehClips", xp: 9800, quality: 90, rank: "Dominion III", members: "۱۸ هزار" },
+  { id: 1, name: "@ArmaxWorld", xp: 100, quality: 96, rank: "Legend", members: "۴۲ هزار" },
+  { id: 2, name: "@NightForgeTV", xp: 100, quality: 94, rank: "Prestige V", members: "۳۸ هزار" },
+  { id: 3, name: "@ShadowRealmGG", xp: 100, quality: 91, rank: "Prestige IV", members: "۳۵ هزار" },
+  { id: 4, name: "@PixelKhorasan", xp: 100, quality: 89, rank: "Prestige II", members: "۲۹ هزار" },
+  { id: 5, name: "@ReyhanGaming", xp: 100, quality: 93, rank: "Prestige I", members: "۲۶ هزار" },
+  { id: 6, name: "@KavehStream", xp: 100, quality: 88, rank: "Dominion V", members: "۲۲ هزار" },
+  { id: 7, name: "@DariushPlays", xp: 100, quality: 85, rank: "Dominion IV", members: "۲۰ هزار" },
+  { id: 8, name: "@SetarehClips", xp: 100, quality: 90, rank: "Dominion III", members: "۱۸ هزار" },
   { id: 9, name: "@ArshiaOnline", xp: 8900, quality: 82, rank: "Dominion II", members: "۱۵ هزار" },
   { id: 10, name: "@NoorGameHub", xp: 8100, quality: 87, rank: "Dominion I", members: "۱۳ هزار" },
   { id: 11, name: "@BorzMedia", xp: 6200, quality: 79, rank: "Ascendant IV", members: "۹ هزار" },
