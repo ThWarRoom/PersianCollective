@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Persian Collective | پنل مدیریت</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="app">
+  <div id="shell-sidebar"></div>
+  <main class="main fade-in">
+    <div class="topbar">
+      <div>
+        <div class="page-title">پنل مدیریت</div>
+        <div class="page-sub">افزودن/ویرایش/حذف کانال‌ها، XP، رنک‌ها، لاگ‌ها، اطلاعیه‌ها و قوانین</div>
+      </div>
+    </div>
+
+    <div class="card" style="border-color:rgba(62,123,250,.35); background:rgba(62,123,250,.06); margin-bottom:22px;">
+      <span style="color:var(--blue); font-weight:700; font-size:.85rem;">توجه:</span>
+      <span style="color:var(--muted); font-size:.85rem;">
+        طبق طراحی این نسخه (بدون دیتابیس، صرفاً فایل‌های JSON)، تغییرات این پنل در همین نشست مرورگر شما ذخیره می‌شود.
+        برای پایدارسازی دائمی، این تغییرات باید در بک‌اند به فایل‌های channels.json / logs.json / rules.json / news.json نوشته شوند.
+      </span>
+    </div>
+
+    <div class="admin-tabs">
+      <button class="admin-tab active" data-tab="channels">کانال‌ها</button>
+      <button class="admin-tab" data-tab="logs">XP Logs</button>
+      <button class="admin-tab" data-tab="news">اطلاعیه‌ها</button>
+      <button class="admin-tab" data-tab="rules">قوانین</button>
+    </div>
+
+    <!-- ===================== CHANNELS TAB ===================== -->
+    <section id="tab-channels" class="admin-section">
+      <div class="card" style="margin-bottom:18px;">
+        <div class="section-head" style="margin-top:0;"><div><h2>افزودن کانال جدید</h2></div></div>
+        <div class="form-row">
+          <div class="field"><label>نام کانال</label><input id="ch-name" placeholder="@ChannelName"></div>
+          <div class="field"><label>XP اولیه</label><input id="ch-xp" type="number" value="0"></div>
+          <div class="field"><label>امتیاز کیفیت</label><input id="ch-quality" type="number" value="0"></div>
+          <div class="field"><label>رنک</label><select id="ch-rank"></select></div>
+        </div>
+        <button class="btn btn-primary" onclick="addChannel()">${ICONS_PLACEHOLDER}افزودن کانال</button>
+      </div>
+
+      <div class="card" style="padding:6px 10px;">
+        <table class="table">
+          <thead><tr><th>کانال</th><th>رنک</th><th>XP</th><th>کیفیت</th><th>Persian Coin Pro</th><th>عملیات</th></tr></thead>
+          <tbody id="channels-table"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ===================== LOGS TAB ===================== -->
+    <section id="tab-logs" class="admin-section" style="display:none;">
+      <div class="card" style="margin-bottom:18px;">
+        <div class="section-head" style="margin-top:0;"><div><h2>ثبت XP Log جدید</h2></div></div>
+        <div class="form-row">
+          <div class="field"><label>کانال</label><select id="log-channel"></select></div>
+          <div class="field"><label>مقدار XP</label><input id="log-amount" type="number" value="100"></div>
+          <div class="field"><label>دلیل دریافت</label><input id="log-reason" placeholder="مثلاً: عضویت رسمی در مجموعه"></div>
+          <div class="field"><label>تاریخ</label><input id="log-date" placeholder="۱۴۰۳/۰۴/۱۲"></div>
+        </div>
+        <button class="btn btn-primary" onclick="addLog()">ثبت لاگ</button>
+      </div>
+      <div class="card list-card" id="logs-list"></div>
+    </section>
+
+    <!-- ===================== NEWS TAB ===================== -->
+    <section id="tab-news" class="admin-section" style="display:none;">
+      <div class="card" style="margin-bottom:18px;">
+        <div class="section-head" style="margin-top:0;"><div><h2>ثبت اطلاعیه جدید</h2></div></div>
+        <div class="form-row">
+          <div class="field"><label>عنوان</label><input id="news-title" placeholder="عنوان اطلاعیه"></div>
+          <div class="field"><label>تاریخ</label><input id="news-date" placeholder="۱۴۰۳/۰۴/۱۲"></div>
+        </div>
+        <div class="field" style="margin-bottom:14px;"><label>متن اطلاعیه</label><textarea id="news-body"></textarea></div>
+        <button class="btn btn-primary" onclick="addNews()">انتشار اطلاعیه</button>
+      </div>
+      <div class="grid grid-2" id="news-admin-list"></div>
+    </section>
+
+    <!-- ===================== RULES TAB ===================== -->
+    <section id="tab-rules" class="admin-section" style="display:none;">
+      <div class="card" style="margin-bottom:18px;">
+        <div class="section-head" style="margin-top:0;"><div><h2>افزودن قانون جدید</h2></div></div>
+        <div class="field" style="margin-bottom:14px;"><label>عنوان قانون</label><input id="rule-title"></div>
+        <div class="field" style="margin-bottom:14px;"><label>توضیح قانون</label><textarea id="rule-body"></textarea></div>
+        <button class="btn btn-primary" onclick="addRule()">افزودن قانون</button>
+      </div>
+      <div class="grid grid-2" id="rules-admin-list"></div>
+    </section>
+
+    <div id="shell-footer"></div>
+  </main>
+</div>
+
+<script src="assets/data.js"></script>
+<script src="assets/components.js"></script>
+<script>
+  mountShell("admin.html");
+  document.getElementById('shell-footer').innerHTML = renderFooter();
+  document.querySelector('.btn-primary[onclick="addChannel()"]').innerHTML = ICONS.plus + " افزودن کانال";
+
+  // ---- local mutable copies (session-only state) ----
+  let channels = [...CHANNELS];
+  let logs = [...XP_LOGS];
+  let newsItems = [...NEWS];
+  let rules = [...RULES];
+  let idCounter = 1000;
+
+  // ---- tabs ----
+  document.querySelectorAll('.admin-tab').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      document.querySelectorAll('.admin-tab').forEach(b=>b.classList.remove('active'));
+      document.querySelectorAll('.admin-section').forEach(s=>s.style.display='none');
+      btn.classList.add('active');
+      document.getElementById('tab-'+btn.dataset.tab).style.display='block';
+    });
+  });
+
+  function fillRankSelect(sel, selected){
+    sel.innerHTML = RANKS.map(r=>`<option value="${r}" ${r===selected?'selected':''}>${r}</option>`).join("");
+  }
+  fillRankSelect(document.getElementById('ch-rank'), "Initiate I");
+
+  // ---- CHANNELS ----
+  function renderChannels(){
+    document.getElementById('channels-table').innerHTML = channels.map(c=>{
+      const coins = Math.floor(c.xp / SETTINGS.xpPerCoin);
+      return `
+      <tr>
+        <td>${c.name}</td>
+        <td><span class="pill">${c.rank}</span></td>
+        <td>
+          <input type="number" value="${c.xp}" style="width:90px; background:var(--bg-elev); border:1px solid var(--line); color:var(--white); border-radius:8px; padding:6px 8px;"
+            onchange="updateChannel(${c.id}, 'xp', this.value)">
+        </td>
+        <td>
+          <input type="number" value="${c.quality}" style="width:70px; background:var(--bg-elev); border:1px solid var(--line); color:var(--white); border-radius:8px; padding:6px 8px;"
+            onchange="updateChannel(${c.id}, 'quality', this.value)">
+        </td>
+        <td style="color:var(--gold-bright); font-weight:700;">${coins.toLocaleString('fa-IR')}</td>
+        <td>
+          <div class="admin-row-actions">
+            <select onchange="updateChannel(${c.id}, 'rank', this.value)" style="background:var(--bg-elev); border:1px solid var(--line); color:var(--white); border-radius:8px; font-size:.78rem;" id="rank-sel-${c.id}"></select>
+            <button class="icon-btn danger" onclick="deleteChannel(${c.id})">${ICONS.trash}</button>
+          </div>
+        </td>
+      </tr>`;
+    }).join("") || `<tr><td colspan="6" class="empty-state">هیچ کانالی ثبت نشده است.</td></tr>`;
+
+    channels.forEach(c=>{
+      const sel = document.getElementById('rank-sel-'+c.id);
+      if(sel) fillRankSelect(sel, c.rank);
+    });
+
+    // keep log-channel select in sync
+    const logSel = document.getElementById('log-channel');
+    logSel.innerHTML = channels.map(c=>`<option value="${c.name}">${c.name}</option>`).join("");
+  }
+
+  function addChannel(){
+    const name = document.getElementById('ch-name').value.trim();
+    if(!name){ showToast("نام کانال را وارد کنید"); return; }
+    channels.push({
+      id: ++idCounter,
+      name,
+      xp: Number(document.getElementById('ch-xp').value)||0,
+      quality: Number(document.getElementById('ch-quality').value)||0,
+      rank: document.getElementById('ch-rank').value,
+      members: "—"
+    });
+    document.getElementById('ch-name').value = "";
+    document.getElementById('ch-xp').value = 0;
+    document.getElementById('ch-quality').value = 0;
+    renderChannels();
+    showToast("کانال با موفقیت افزوده شد ✅");
+  }
+  function updateChannel(id, field, value){
+    const c = channels.find(x=>x.id===id);
+    if(!c) return;
+    c[field] = (field==='xp'||field==='quality') ? Number(value) : value;
+    renderChannels();
+    showToast("تغییرات ذخیره شد");
+  }
+  function deleteChannel(id){
+    channels = channels.filter(c=>c.id!==id);
+    renderChannels();
+    showToast("کانال حذف شد");
+  }
+
+  // ---- LOGS ----
+  function renderLogs(){
+    document.getElementById('logs-list').innerHTML = [...logs].reverse().map(l=>`
+      <div class="log-entry">
+        <div class="log-top">
+          <span class="log-channel">${l.channel}</span>
+          <div style="display:flex; align-items:center; gap:10px;">
+            <span class="log-amount">+${l.amount.toLocaleString('fa-IR')} XP</span>
+            <button class="icon-btn danger" onclick="deleteLog(${l.id})">${ICONS.trash}</button>
+          </div>
+        </div>
+        <div class="log-reason">${l.reason}</div>
+        <div class="log-date">${l.date}</div>
+      </div>
+    `).join("") || `<div class="empty-state">هیچ لاگی ثبت نشده است.</div>`;
+  }
+  function addLog(){
+    const channel = document.getElementById('log-channel').value;
+    const amount = Number(document.getElementById('log-amount').value)||0;
+    const reason = document.getElementById('log-reason').value.trim();
+    const date = document.getElementById('log-date').value.trim() || "—";
+    if(!channel || !reason){ showToast("همه فیلدها را پر کنید"); return; }
+    logs.push({ id: ++idCounter, channel, amount, reason, date });
+    const c = channels.find(x=>x.name===channel);
+    if(c) c.xp += amount;
+    document.getElementById('log-reason').value = "";
+    renderLogs(); renderChannels();
+    showToast("XP Log ثبت شد ✅");
+  }
+  function deleteLog(id){
+    logs = logs.filter(l=>l.id!==id);
+    renderLogs();
+    showToast("لاگ حذف شد");
+  }
+
+  // ---- NEWS ----
+  function renderNews(){
+    document.getElementById('news-admin-list').innerHTML = [...newsItems].reverse().map(n=>`
+      <div class="card news-card">
+        <div class="log-top">
+          <span class="news-date">${n.date}</span>
+          <button class="icon-btn danger" onclick="deleteNews(${n.id})">${ICONS.trash}</button>
+        </div>
+        <div class="news-title">${n.title}</div>
+        <div class="news-body">${n.body}</div>
+      </div>
+    `).join("") || `<div class="empty-state">اطلاعیه‌ای ثبت نشده است.</div>`;
+  }
+  function addNews(){
+    const title = document.getElementById('news-title').value.trim();
+    const body = document.getElementById('news-body').value.trim();
+    const date = document.getElementById('news-date').value.trim() || "—";
+    if(!title || !body){ showToast("عنوان و متن را وارد کنید"); return; }
+    newsItems.push({ id: ++idCounter, title, body, date });
+    document.getElementById('news-title').value = "";
+    document.getElementById('news-body').value = "";
+    renderNews();
+    showToast("اطلاعیه منتشر شد ✅");
+  }
+  function deleteNews(id){
+    newsItems = newsItems.filter(n=>n.id!==id);
+    renderNews();
+    showToast("اطلاعیه حذف شد");
+  }
+
+  // ---- RULES ----
+  function renderRules(){
+    document.getElementById('rules-admin-list').innerHTML = rules.map((r,i)=>`
+      <div class="card rule-card">
+        <div class="rule-index">${(i+1).toLocaleString('fa-IR')}</div>
+        <div style="flex:1;">
+          <div class="log-top"><div class="rule-title">${r.title}</div>
+            <button class="icon-btn danger" onclick="deleteRule(${i})">${ICONS.trash}</button>
+          </div>
+          <div class="rule-body">${r.body}</div>
+        </div>
+      </div>
+    `).join("") || `<div class="empty-state">قانونی ثبت نشده است.</div>`;
+  }
+  function addRule(){
+    const title = document.getElementById('rule-title').value.trim();
+    const body = document.getElementById('rule-body').value.trim();
+    if(!title || !body){ showToast("عنوان و متن قانون را وارد کنید"); return; }
+    rules.push({ title, body });
+    document.getElementById('rule-title').value = "";
+    document.getElementById('rule-body').value = "";
+    renderRules();
+    showToast("قانون افزوده شد ✅");
+  }
+  function deleteRule(i){
+    rules.splice(i,1);
+    renderRules();
+    showToast("قانون حذف شد");
+  }
+
+  renderChannels();
+  renderLogs();
+  renderNews();
+  renderRules();
+</script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Persian Collective | اطلاعیه‌ها</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="app">
+  <div id="shell-sidebar"></div>
+  <main class="main fade-in">
+    <div class="topbar">
+      <div>
+        <div class="page-title">اطلاعیه‌های مدیریت</div>
+        <div class="page-sub">آخرین تصمیمات و اخبار رسمی Persian Collective</div>
+      </div>
+    </div>
+
+    <div class="grid grid-2" id="news-list"></div>
+
+    <div id="shell-footer"></div>
+  </main>
+</div>
+
+<script src="assets/data.js"></script>
+<script src="assets/components.js"></script>
+<script>
+  mountShell("news.html");
+  document.getElementById('shell-footer').innerHTML = renderFooter();
+
+  document.getElementById('news-list').innerHTML = [...NEWS].reverse().map(n=>`
+    <div class="card news-card">
+      <span class="news-date">${n.date}</span>
+      <div class="news-title">${n.title}</div>
+      <div class="news-body">${n.body}</div>
+    </div>
+  `).join("") || `<div class="empty-state">فعلاً اطلاعیه‌ای ثبت نشده است.</div>`;
+</script>
+</body>
+</html>

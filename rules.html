@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Persian Collective | قوانین مجموعه</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="app">
+  <div id="shell-sidebar"></div>
+  <main class="main fade-in">
+    <div class="topbar">
+      <div>
+        <div class="page-title">قوانین مجموعه</div>
+        <div class="page-sub">رعایت این قوانین برای تمام اعضای Persian Collective الزامی است</div>
+      </div>
+    </div>
+
+    <div class="grid grid-2" id="rules-list"></div>
+
+    <div id="shell-footer"></div>
+  </main>
+</div>
+
+<script src="assets/data.js"></script>
+<script src="assets/components.js"></script>
+<script>
+  mountShell("rules.html");
+  document.getElementById('shell-footer').innerHTML = renderFooter();
+
+  document.getElementById('rules-list').innerHTML = RULES.map((r,i)=>`
+    <div class="card rule-card">
+      <div class="rule-index">${(i+1).toLocaleString('fa-IR')}</div>
+      <div>
+        <div class="rule-title">${r.title}</div>
+        <div class="rule-body">${r.body}</div>
+      </div>
+    </div>
+  `).join("");
+</script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Persian Collective | لیدربرد</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="app">
+  <div id="shell-sidebar"></div>
+
+  <main class="main fade-in">
+    <div class="topbar">
+      <div>
+        <div class="page-title">لیدربرد مجموعه</div>
+        <div class="page-sub">رتبه‌بندی کانال‌ها بر اساس XP، کیفیت گیم و افتخارات کل دوران</div>
+      </div>
+    </div>
+
+    <div class="section-head">
+      <div><span class="eyebrow">بخش ۱</span><h2>۱۰ کانال برتر XP</h2></div>
+    </div>
+    <div class="card list-card" id="top-xp"></div>
+
+    <div class="section-head">
+      <div><span class="eyebrow">بخش ۲</span><h2>۱۰ کانال برتر کیفیت گیم</h2></div>
+    </div>
+    <div class="card list-card" id="top-quality"></div>
+
+    <div class="section-head">
+      <div><span class="eyebrow">بخش ۳</span><h2>Hall Of Fame — سه کانال برتر کل دوران</h2></div>
+    </div>
+    <div class="grid grid-3" id="hall-of-fame"></div>
+
+    <div class="section-head">
+      <div><span class="eyebrow">بخش ۴</span><h2>تمام اعضای مجموعه</h2></div>
+    </div>
+    <div class="card list-card" style="padding:6px 10px;">
+      <table class="table" id="all-members-table">
+        <thead><tr><th>نام کانال</th><th>رنک</th><th>XP</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <div id="shell-footer"></div>
+  </main>
+</div>
+
+<script src="assets/data.js"></script>
+<script src="assets/components.js"></script>
+<script>
+  mountShell("leaderboard.html");
+  document.getElementById('shell-footer').innerHTML = renderFooter();
+
+  function rankClass(i){ return i===0?'top1':i===1?'top2':i===2?'top3':''; }
+
+  const byXP = [...CHANNELS].sort((a,b)=> b.xp - a.xp).slice(0,10);
+  document.getElementById('top-xp').innerHTML = byXP.map((c,i)=>`
+    <div class="row">
+      <span class="rank-num ${rankClass(i)}">${(i+1).toLocaleString('fa-IR')}</span>
+      ${hexBadge(c.rank, 34)}
+      <div class="row-name">${c.name}<div class="row-sub">${c.rank}</div></div>
+      <span class="row-xp">${c.xp.toLocaleString('fa-IR')} XP</span>
+    </div>
+  `).join("");
+
+  const byQuality = [...CHANNELS].sort((a,b)=> b.quality - a.quality).slice(0,10);
+  document.getElementById('top-quality').innerHTML = byQuality.map((c,i)=>`
+    <div class="row">
+      <span class="rank-num ${rankClass(i)}">${(i+1).toLocaleString('fa-IR')}</span>
+      ${hexBadge(c.rank, 34)}
+      <div class="row-name">${c.name}</div>
+      <span class="row-quality">${c.quality.toLocaleString('fa-IR')} امتیاز</span>
+    </div>
+  `).join("");
+
+  const medals = ["🥇","🥈","🥉"];
+  document.getElementById('hall-of-fame').innerHTML = HALL_OF_FAME.map((h,i)=>`
+    <div class="card fame-card ${i===0?'gold':''}">
+      <div class="fame-medal">${medals[i]}</div>
+      <div class="fame-name">${h.name}</div>
+      <div class="fame-note">${h.note}</div>
+    </div>
+  `).join("");
+
+  document.querySelector('#all-members-table tbody').innerHTML = [...CHANNELS].sort((a,b)=> b.xp-a.xp).map(c=>`
+    <tr>
+      <td>${c.name}</td>
+      <td><span class="pill">${c.rank}</span></td>
+      <td>${c.xp.toLocaleString('fa-IR')}</td>
+    </tr>
+  `).join("");
+</script>
+</body>
+</html>

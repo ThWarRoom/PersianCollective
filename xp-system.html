@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Persian Collective | سیستم XP</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="app">
+  <div id="shell-sidebar"></div>
+  <main class="main fade-in">
+    <div class="topbar">
+      <div>
+        <div class="page-title">سیستم XP</div>
+        <div class="page-sub">همه چیز درباره‌ی XP و Persian Coin Pro</div>
+      </div>
+    </div>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="section-head" style="margin-top:0;">
+          <div><span class="eyebrow">تعریف</span><h2>XP چیست؟</h2></div>
+        </div>
+        <p style="color:var(--muted); font-size:.92rem;">
+          XP معیار سنجش میزان فعالیت، همکاری و کیفیت هر کانال در Persian Collective است.
+          کانال‌ها با انجام فعالیت‌های مختلف — از عضویت رسمی تا مشارکت در ایونت‌ها — XP کسب می‌کنند
+          و بر اساس مجموع آن در لیدربرد و سیستم رنک‌بندی مجموعه قرار می‌گیرند.
+        </p>
+      </div>
+      <div class="card">
+        <div class="section-head" style="margin-top:0;">
+          <div><span class="eyebrow">تعریف</span><h2>Persian Coin Pro چیست؟</h2></div>
+        </div>
+        <p style="color:var(--muted); font-size:.92rem;">
+          Persian Coin Pro واحد پاداش رسمی مجموعه است که از تجمیع XP به دست می‌آید و می‌تواند
+          برای مزایای ویژه‌ی اعضا مورد استفاده قرار گیرد.
+        </p>
+        <div class="card" style="background:rgba(212,175,55,.06); border-color:rgba(212,175,55,.3); margin-top:14px; text-align:center;">
+          <span style="font-weight:800; color:var(--gold-bright); font-size:1.05rem;" id="conversion-rate"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-head">
+      <div><span class="eyebrow">راهنما</span><h2>روش‌های دریافت XP</h2></div>
+    </div>
+    <div class="card" style="padding:6px 10px;">
+      <table class="table">
+        <thead><tr><th>روش کسب XP</th><th>مقدار</th></tr></thead>
+        <tbody id="xp-methods-table"></tbody>
+      </table>
+    </div>
+
+    <div id="shell-footer"></div>
+  </main>
+</div>
+
+<script src="assets/data.js"></script>
+<script src="assets/components.js"></script>
+<script>
+  mountShell("xp-system.html");
+  document.getElementById('shell-footer').innerHTML = renderFooter();
+
+  document.getElementById('conversion-rate').textContent =
+    `هر ${SETTINGS.xpPerCoin.toLocaleString('fa-IR')} XP برابر است با ۱ Persian Coin Pro`;
+
+  document.getElementById('xp-methods-table').innerHTML = XP_METHODS.map(m=>`
+    <tr><td>${m.action}</td><td style="color:var(--gold-bright); font-weight:700;">${m.amount}</td></tr>
+  `).join("");
+</script>
+</body>
+</html>

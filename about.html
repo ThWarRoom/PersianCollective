@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Persian Collective | اطلاعات مجموعه</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="app">
+  <div id="shell-sidebar"></div>
+  <main class="main fade-in">
+    <div class="topbar">
+      <div>
+        <div class="page-title">اطلاعات مجموعه</div>
+        <div class="page-sub">آمار کلی و پیشینه‌ی Persian Collective</div>
+      </div>
+    </div>
+
+    <div class="grid grid-4" id="about-stats" style="grid-template-columns:repeat(4,1fr);"></div>
+    <div class="grid grid-3" id="about-stats-2" style="margin-top:18px;"></div>
+
+    <div id="shell-footer"></div>
+  </main>
+</div>
+
+<script src="assets/data.js"></script>
+<script src="assets/components.js"></script>
+<script>
+  mountShell("about.html");
+  document.getElementById('shell-footer').innerHTML = renderFooter();
+
+  const totalXP = CHANNELS.reduce((s,c)=> s + c.xp, 0);
+  const totalCoins = Math.floor(totalXP / SETTINGS.xpPerCoin);
+
+  document.getElementById('about-stats').innerHTML = `
+    <div class="card stat-card">
+      <div class="stat-icon">${ICONS.season}</div>
+      <div class="stat-value" style="font-size:1.2rem;">${SETTINGS.foundedDate}</div>
+      <div class="stat-label">تاریخ تاسیس</div>
+    </div>
+    <div class="card stat-card">
+      <div class="stat-icon">${ICONS.trophy}</div>
+      <div class="stat-value" style="font-size:1.2rem;">${SETTINGS.season}</div>
+      <div class="stat-label">فصل فعلی</div>
+    </div>
+    <div class="card stat-card">
+      <div class="stat-icon">${ICONS.members}</div>
+      <div class="stat-value">${CHANNELS.length.toLocaleString('fa-IR')}</div>
+      <div class="stat-label">تعداد کانال‌ها</div>
+    </div>
+    <div class="card stat-card">
+      <div class="stat-icon">${ICONS.members}</div>
+      <div class="stat-value">${CHANNELS.length.toLocaleString('fa-IR')}</div>
+      <div class="stat-label">تعداد اعضا</div>
+    </div>
+  `;
+
+  document.getElementById('about-stats-2').innerHTML = `
+    <div class="card stat-card">
+      <div class="stat-icon">${ICONS.xp}</div>
+      <div class="stat-value">${totalXP.toLocaleString('fa-IR')}</div>
+      <div class="stat-label">مجموع XP</div>
+    </div>
+    <div class="card stat-card">
+      <div class="stat-icon">${ICONS.coin}</div>
+      <div class="stat-value">${totalCoins.toLocaleString('fa-IR')}</div>
+      <div class="stat-label">مجموع Persian Coin Pro</div>
+    </div>
+    <div class="card stat-card">
+      <div class="stat-icon">${ICONS.logs}</div>
+      <div class="stat-value">${XP_LOGS.length.toLocaleString('fa-IR')}</div>
+      <div class="stat-label">تعداد XP Logs</div>
+    </div>
+  `;
+</script>
+</body>
+</html>

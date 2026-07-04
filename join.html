@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Persian Collective | نحوه عضویت</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="app">
+  <div id="shell-sidebar"></div>
+  <main class="main fade-in">
+    <div class="topbar">
+      <div>
+        <div class="page-title">نحوه عضویت در مجموعه</div>
+        <div class="page-sub">شرایط، مراحل بررسی و راه ارتباطی برای پیوستن به Persian Collective</div>
+      </div>
+    </div>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="section-head" style="margin-top:0;">
+          <div><span class="eyebrow">پیش‌نیاز</span><h2>شرایط عضویت</h2></div>
+        </div>
+        <ul id="requirements-list" style="display:flex; flex-direction:column; gap:12px;"></ul>
+      </div>
+
+      <div class="card">
+        <div class="section-head" style="margin-top:0;">
+          <div><span class="eyebrow">درخواست</span><h2>مدت بررسی</h2></div>
+        </div>
+        <p style="color:var(--muted); font-size:.92rem;">
+          بررسی درخواست عضویت معمولاً حداکثر <strong style="color:var(--gold-bright);">۴۸ ساعت</strong> زمان می‌برد.
+          در صورت نیاز به اطلاعات بیشتر، تیم پشتیبانی مستقیماً با کانال شما در ارتباط خواهد بود.
+        </p>
+        <div class="contact-box" style="margin-top:18px;">
+          <span class="contact-id">${'{{SUPPORT_ID}}'}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-head">
+      <div><span class="eyebrow">فرآیند</span><h2>مراحل عضویت</h2></div>
+    </div>
+    <div class="card">
+      <div class="steps" id="join-steps"></div>
+    </div>
+
+    <div id="shell-footer"></div>
+  </main>
+</div>
+
+<script src="assets/data.js"></script>
+<script src="assets/components.js"></script>
+<script>
+  mountShell("join.html");
+  document.getElementById('shell-footer').innerHTML = renderFooter();
+
+  document.getElementById('requirements-list').innerHTML = JOIN_REQUIREMENTS.map(r=>`
+    <li style="display:flex; gap:10px; align-items:flex-start;">
+      <span style="color:var(--gold-bright); margin-top:2px;">${ICONS.rules.replace('viewBox="0 0 24 24"','viewBox="0 0 24 24" width="16" height="16"')}</span>
+      <span style="color:var(--white); font-size:.92rem;">${r}</span>
+    </li>
+  `).join("");
+
+  document.querySelectorAll('.contact-id').forEach(el => el.textContent = SETTINGS.supportId);
+
+  document.getElementById('join-steps').innerHTML = JOIN_STEPS.map((s,i)=>`
+    <div class="step">
+      <div class="step-num">${(i+1).toLocaleString('fa-IR')}</div>
+      <div>
+        <div class="step-title">${s.title}</div>
+        <div class="step-body">${s.body}</div>
+      </div>
+    </div>
+  `).join("");
+</script>
+</body>
+</html>

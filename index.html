@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Persian Collective | صفحه اصلی</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="app">
+  <div id="shell-sidebar"></div>
+
+  <main class="main fade-in">
+    <div class="topbar">
+      <div>
+        <div class="page-title">به Persian Collective خوش آمدید</div>
+        <div class="page-sub">مجموعه‌ای از بهترین کانال‌های گیمینگ فارسی‌زبان — همکاری، رشد و رقابت سالم</div>
+      </div>
+      <div style="display:flex; gap:10px;">
+        <a href="join.html" class="btn btn-primary">عضویت در مجموعه</a>
+        <a href="contact.html" class="btn btn-ghost">ارتباط با پشتیبانی</a>
+      </div>
+    </div>
+
+    <div class="grid" id="stat-cards" style="grid-template-columns:repeat(5,1fr);"></div>
+
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">فعالیت اخیر</span>
+        <h2>آخرین XP Log ها</h2>
+      </div>
+      <a href="xp-system.html" class="btn btn-ghost" style="padding:8px 16px;font-size:.8rem;">مشاهده سیستم XP</a>
+    </div>
+    <div class="card list-card" id="recent-logs"></div>
+
+    <div id="shell-footer"></div>
+  </main>
+</div>
+
+<script src="assets/data.js"></script>
+<script src="assets/components.js"></script>
+<script>
+  mountShell("index.html");
+  document.getElementById('shell-footer').innerHTML = renderFooter();
+
+  const totalXP = CHANNELS.reduce((s,c)=> s + c.xp, 0);
+  const totalCoins = Math.floor(totalXP / SETTINGS.xpPerCoin);
+
+  document.getElementById('stat-cards').innerHTML = `
+    <div class="card stat-card">
+      <div class="stat-icon">${ICONS.members}</div>
+      <div class="stat-value">${CHANNELS.length.toLocaleString('fa-IR')}</div>
+      <div class="stat-label">تعداد کانال‌های عضو</div>
+    </div>
+    <div class="card stat-card">
+      <div class="stat-icon">${ICONS.xp}</div>
+      <div class="stat-value">${totalXP.toLocaleString('fa-IR')}</div>
+      <div class="stat-label">مجموع XP</div>
+    </div>
+    <div class="card stat-card">
+      <div class="stat-icon">${ICONS.coin}</div>
+      <div class="stat-value">${totalCoins.toLocaleString('fa-IR')}</div>
+      <div class="stat-label">تعداد Persian Coin Pro</div>
+    </div>
+    <div class="card stat-card">
+      <div class="stat-icon">${ICONS.logs}</div>
+      <div class="stat-value">${XP_LOGS.length.toLocaleString('fa-IR')}</div>
+      <div class="stat-label">تعداد XP Logs</div>
+    </div>
+    <div class="card stat-card">
+      <div class="stat-icon">${ICONS.season}</div>
+      <div class="stat-value" style="font-size:1.3rem;">${SETTINGS.season}</div>
+      <div class="stat-label">فصل فعلی</div>
+    </div>
+  `;
+
+  const recent = XP_LOGS.slice(0,3);
+  document.getElementById('recent-logs').innerHTML = recent.map(l => `
+    <div class="log-entry">
+      <div class="log-top">
+        <span class="log-channel">${l.channel}</span>
+        <span class="log-amount">+${l.amount.toLocaleString('fa-IR')} XP</span>
+      </div>
+      <div class="log-reason">${l.reason}</div>
+      <div class="log-date">${l.date}</div>
+    </div>
+  `).join("") || `<div class="empty-state">هنوز لاگی ثبت نشده است.</div>`;
+</script>
+</body>
+</html>

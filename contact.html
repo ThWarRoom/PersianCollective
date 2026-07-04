@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Persian Collective | ارتباط با پشتیبانی</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="app">
+  <div id="shell-sidebar"></div>
+  <main class="main fade-in">
+    <div class="topbar">
+      <div>
+        <div class="page-title">ارتباط با پشتیبانی</div>
+        <div class="page-sub">برای هرگونه سوال، درخواست عضویت یا گزارش مشکل با ما در ارتباط باشید</div>
+      </div>
+    </div>
+
+    <div class="card" style="max-width:640px;">
+      <div class="stat-icon" style="width:48px;height:48px; margin-bottom:16px;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><path d="M4 15a2 2 0 0 0 2 2h1v-5H6a2 2 0 0 0-2 2Z"/><path d="M20 15a2 2 0 0 1-2 2h-1v-5h1a2 2 0 0 1 2 2Z"/></svg>
+      </div>
+      <div class="contact-box">
+        <div>
+          <div style="color:var(--muted); font-size:.85rem; margin-bottom:6px;">آیدی پشتیبانی در تلگرام</div>
+          <span class="contact-id" id="support-id"></span>
+        </div>
+        <div class="contact-actions">
+          <button class="btn btn-ghost" onclick="copyText(SETTINGS.supportId)">${ICONS.copy} کپی آیدی</button>
+          <a class="btn btn-blue" id="telegram-link" target="_blank" rel="noopener">${ICONS.send} باز کردن تلگرام</a>
+        </div>
+      </div>
+    </div>
+
+    <div id="shell-footer"></div>
+  </main>
+</div>
+
+<script src="assets/data.js"></script>
+<script src="assets/components.js"></script>
+<script>
+  mountShell("contact.html");
+  document.getElementById('shell-footer').innerHTML = renderFooter();
+  document.getElementById('support-id').textContent = SETTINGS.supportId;
+  document.getElementById('telegram-link').href = SETTINGS.telegramUrl;
+</script>
+</body>
+</html>
